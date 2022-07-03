@@ -10,14 +10,10 @@ export interface User {
 export async function getAllUsers() {
   const data = await prisma.user.findMany();
   return data;
-}
+}''
 
-export async function createUser(email: string, name: string, password: string) {
+export async function createUser(user:User) {
   await prisma.user.create({
-    data: {
-      email,
-      name,
-      password
-    },
+    data: user,
   });
 }
