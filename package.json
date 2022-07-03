@@ -7,8 +7,8 @@
   },
   "scripts": {
     "dev": "next dev",
-    "build": "NODE_ENV=production next build",
-    "start": "NODE_ENV=production next start",
+    "build": "next build",
+    "start": "next start",
     "lint": "next lint",
     "postinstall": "prisma generate"
   },
@@ -16,7 +16,9 @@
     "@prisma/client": "^3.11.0",
     "next": "12.1.0",
     "react": "17.0.2",
-    "react-dom": "17.0.2"
+    "react-dom": "17.0.2",
+    "react-hook-form": "^7.33.1",
+    "react-toastify": "^9.0.5"
   },
   "devDependencies": {
     "@types/node": "17.0.22",

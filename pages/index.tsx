@@ -1,6 +1,18 @@
 import { GetServerSideProps } from "next";
-import { useEffect, useState } from "react";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { ToastContainer, toast } from 'react-toastify';
 import { getAllUsers, User } from "../lib/db";
+import styles from '../styles/Home.module.css'
+
+interface PostProps {
+  users: User[];
+}
+
+type FormValues = {
+  name: String
+  email: String
+  password: String
+}
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const users = await getAllUsers();
@@ -11,30 +23,40 @@ export const getServerSideProps: GetServerSideProps = async () => {
   };
 };
 
-interface PostProps {
-  users: User[];
-}
-
 const Home = ({ users }: PostProps) => {
+  const { register, handleSubmit } = useForm<FormValues>();
 
-  useEffect(() => {
-    console.log(users)
-  }, [users])
+  const onSubmit: SubmitHandler<FormValues> = async data => {
+    console.log(data);
 
-  const post = async () => {
-    await fetch("/api/user", {
+    const res = await fetch("/api/user", {
       method: "POST",
-      //body: JSON.stringify(description),
+      body: JSON.stringify(data),
     });
-  };
+
+    console.log(res)
+
+    if (res.status === 200) toast("Pronto", {type: "success"});
+    else toast(`Hove um problema`, {type: "error"});
+
+  }
 
   return (
-    <div className="h-screen bg-gray-500">
-      {users.map(user=> (
+    <div className={styles.container}>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <input type="text" placeholder="Nome"  {...register("name")} />
+        <input type="email" placeholder="Email" {...register("email")} />
+        <input type="password" placeholder="Senha" {...register("password")} />
+        <input type="submit" />
+      </form>
+
+      {users.map(user => (
         <div key={user.id}>
-          <h1> {user.name} </h1>
+          <h1> {user.id}, {user.name}, {user.email}, {user.password} </h1>
         </div>
       ))}
+
+
     </div>
   );
 };
