@@ -8,6 +8,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "start:pm2": "pm2 start ./node_modules/next/dist/bin/next-start",
     "start": "next start",
     "lint": "next lint",
     "postinstall": "prisma generate"
