@@ -5,11 +5,11 @@ services:
     image: jenkins/jenkins:lts
     container_name: jenkins
     privileged: true
-    hostname: jenkinsserver
     user: root
+    hostname: jenkinsserver
     ports:
       - 8080:8080
-      - 50000:50000
+      - 50000:3000
     networks:
       - net-app
     volumes:
